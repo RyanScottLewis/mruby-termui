@@ -8,8 +8,6 @@ MRuby::Gem::Specification.new('mruby-termui') do |spec|
   
   spec.rbfiles << "#{dir}/mrblib/term_ui.rb"
   
-  spec.rbfiles << "#{dir}/mrblib/term_ui/margins.rb"
-  
   spec.rbfiles << "#{dir}/mrblib/term_ui/has_attributes.rb"
   spec.rbfiles << "#{dir}/mrblib/term_ui/has_application.rb"
   spec.rbfiles << "#{dir}/mrblib/term_ui/has_children.rb"
@@ -34,6 +32,8 @@ MRuby::Gem::Specification.new('mruby-termui') do |spec|
   spec.rbfiles << "#{dir}/mrblib/term_ui/event/unfocus.rb"
   
   spec.rbfiles << "#{dir}/mrblib/term_ui/cursor.rb"
+  
+  spec.rbfiles << "#{dir}/mrblib/term_ui/margins.rb"
   
   spec.rbfiles << "#{dir}/mrblib/term_ui/widget.rb"
   spec.rbfiles << "#{dir}/mrblib/term_ui/group.rb"
