@@ -20,7 +20,10 @@ module TermUI
     # @param value [#to_i]
     # @return [Integer]
     def top=(value)
-      @top = value.to_i
+      value = value.to_i
+      value = 0 if value < 0
+      
+      @top = value
     end
     
     # Get the right margin.
@@ -33,7 +36,10 @@ module TermUI
     # @param value [#to_i]
     # @return [Integer]
     def right=(value)
-      @right = value.to_i
+      value = value.to_i
+      value = 0 if value < 0
+      
+      @right = value
     end
     
     # Get the bottom margin.
@@ -46,7 +52,10 @@ module TermUI
     # @param value [#to_i]
     # @return [Integer]
     def bottom=(value)
-      @bottom = value.to_i
+      value = value.to_i
+      value = 0 if value < 0
+      
+      @bottom = value
     end
     
     # Get the left margin.
@@ -59,7 +68,10 @@ module TermUI
     # @param value [#to_i]
     # @return [Integer]
     def left=(value)
-      @left = value.to_i
+      value = value.to_i
+      value = 0 if value < 0
+      
+      @left = value
     end
     
   end
