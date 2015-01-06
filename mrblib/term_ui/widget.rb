@@ -98,13 +98,13 @@ module TermUI
       options[:x] += absolute_x
       options[:y] += absolute_y
       
-      # Translate the coordinates by top & left margin
-      options[:x] += margins.left
-      options[:y] += margins.top
-      
-      # Offset width & height by bottom and right margins
-      options[:width] -= margins.right
-      options[:height] -= margins.bottom
+      # # Translate the coordinates by top & left margin
+      # options[:x] += margins.left
+      # options[:y] += margins.top
+      #
+      # # Offset width & height by bottom and right margins
+      # options[:width] -= margins.right
+      # options[:height] -= margins.bottom
       
       # Convert character to unicode # TODO: Is utf8_char_to_unicode even needed at this point?
       # TODO: If an options[:character] is an integer, the use that. In any other case, use the below
@@ -142,14 +142,14 @@ module TermUI
       # Translate the coordinates by absolute coordinates
       options[:x] += absolute_x
       options[:y] += absolute_y
-      
-      # Translate the coordinates by top & left margin
-      options[:x] += margins.left
-      options[:y] += margins.top
-      
-      # Offset width & height by bottom and right margins
-      options[:width] -= margins.right
-      options[:height] -= margins.bottom
+
+      # # Translate the coordinates by top & left margin
+      # options[:x] += margins.left
+      # options[:y] += margins.top
+      #
+      # # Offset width & height by bottom and right margins
+      # options[:width] -= margins.right
+      # options[:height] -= margins.bottom
       
       # Convert character to unicode # TODO: Is utf8_char_to_unicode even needed at this point?
       # TODO: If an options[:character] is an integer, the use that. In any other case, use the below
