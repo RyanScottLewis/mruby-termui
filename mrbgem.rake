@@ -8,6 +8,8 @@ MRuby::Gem::Specification.new('mruby-termui') do |spec|
   
   spec.rbfiles << "#{dir}/mrblib/term_ui.rb"
   
+  spec.rbfiles << "#{dir}/mrblib/term_ui/margins.rb"
+  
   spec.rbfiles << "#{dir}/mrblib/term_ui/has_attributes.rb"
   spec.rbfiles << "#{dir}/mrblib/term_ui/has_application.rb"
   spec.rbfiles << "#{dir}/mrblib/term_ui/has_children.rb"
@@ -15,6 +17,7 @@ MRuby::Gem::Specification.new('mruby-termui') do |spec|
   spec.rbfiles << "#{dir}/mrblib/term_ui/has_dimensions.rb"
   spec.rbfiles << "#{dir}/mrblib/term_ui/has_events.rb"
   spec.rbfiles << "#{dir}/mrblib/term_ui/has_foreground_and_background.rb"
+  spec.rbfiles << "#{dir}/mrblib/term_ui/has_margins.rb"
   spec.rbfiles << "#{dir}/mrblib/term_ui/has_orientation.rb"
   spec.rbfiles << "#{dir}/mrblib/term_ui/has_parent.rb"
   spec.rbfiles << "#{dir}/mrblib/term_ui/has_relative_coordinates.rb"
