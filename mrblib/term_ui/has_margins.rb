@@ -23,9 +23,15 @@ module TermUI
     # 
     # @param value [Margins] The new Margins instance.
     def margins=(value)
-      raise TypeError, 'margins must be a Margins instance' unless value.is_a?(Margins)
+      raise TypeError, ':margins option must be a Margins instance or respond to #to_hash or #to_h' unless attributes[:margins].respond_to?(:to_hash) || attributes[:margins].respond_to?(:to_h)
       
-      @margins = value
+      @margins = if value.is_a?(Margins)
+        value
+      else
+        value = value.to_hash rescue value.to_h
+        
+        Margins.new(value)
+      end
     end
     
   end
