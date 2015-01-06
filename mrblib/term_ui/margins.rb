@@ -2,7 +2,7 @@ module TermUI
   
   class Margins
     
-    include HasAttributes
+    include TermUI::HasAttributes
     
     def initialize(attributes={})
       @top, @left, @bottom, @right = 0, 0, 0, 0
