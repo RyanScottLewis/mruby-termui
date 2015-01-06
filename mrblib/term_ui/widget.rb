@@ -102,6 +102,10 @@ module TermUI
       options[:x] += margins.left
       options[:y] += margins.top
       
+      # Offset width & height by bottom and right margins
+      options[:width] -= margins.right
+      options[:height] -= margins.bottom
+      
       # Convert character to unicode # TODO: Is utf8_char_to_unicode even needed at this point?
       # TODO: If an options[:character] is an integer, the use that. In any other case, use the below
       options[:character] = Termbox.utf8_char_to_unicode( options[:character].to_s[0] ) unless options[:character].nil?
@@ -110,6 +114,7 @@ module TermUI
       Termbox.change_cell( options[:x], options[:y], options[:character], options[:foreground], options[:background] )
     end
     
+    # TODO: Note the redundency in code with this and #draw_cell
     # Change a rectangle of cells relative to this widget's coordinates.
     def draw_rectangle(options={})
       raise TypeError, 'options must respond to :to_hash or :to_h' unless options.respond_to?(:to_hash) || options.respond_to?(:to_h)
@@ -134,9 +139,17 @@ module TermUI
       options[:width] = 1 if options[:width] < 1
       options[:height] = 1 if options[:height] < 1
       
-      # Translate the coordinates
+      # Translate the coordinates by absolute coordinates
       options[:x] += absolute_x
       options[:y] += absolute_y
+      
+      # Translate the coordinates by top & left margin
+      options[:x] += margins.left
+      options[:y] += margins.top
+      
+      # Offset width & height by bottom and right margins
+      options[:width] -= margins.right
+      options[:height] -= margins.bottom
       
       # Convert character to unicode # TODO: Is utf8_char_to_unicode even needed at this point?
       # TODO: If an options[:character] is an integer, the use that. In any other case, use the below
