@@ -29,13 +29,13 @@ module TermUI
     # Get the computed width of this widget.
     # Subclasses implement this method with their own logic.
     def computed_width
-      @width
+      @width + margins.width
     end
     
     # Get the computed height of this widget.
     # Subclasses implement this method with their own logic.
     def computed_height
-      @height
+      @height + margins.height
     end
     
     # Get the cursor for this application.
@@ -101,10 +101,8 @@ module TermUI
       # Translate the coordinates by top & left margin
       options[:x] += margins.left
       options[:y] += margins.top
-
-      # Offset width & height by bottom & right margins
-      options[:width] -= margins.right
-      options[:height] -= margins.bottom
+      
+      # TODO: What about bottom and right margins?
       
       # Convert character to unicode # TODO: Is utf8_char_to_unicode even needed at this point?
       # TODO: If an options[:character] is an integer, the use that. In any other case, use the below

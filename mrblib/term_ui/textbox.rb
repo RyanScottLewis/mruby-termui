@@ -31,6 +31,16 @@ module TermUI
       @height = 1 if @height < 1
     end
     
+    # Clear all characters within this textbox.
+    # 
+    # @return [Textbox]
+    def clear
+      @text = ""
+      redraw
+      
+      self
+    end
+    
     # Get the mask character for this textbox.
     # 
     # @return [String]

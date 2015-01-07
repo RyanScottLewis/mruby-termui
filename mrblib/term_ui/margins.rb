@@ -74,6 +74,20 @@ module TermUI
       @left = value
     end
     
+    # Get the total height of the margins.
+    # 
+    # @return [Integer]
+    def height
+      @top + @bottom
+    end
+    
+    # Get the total width of the margins.
+    # 
+    # @return [Integer]
+    def width
+      @left + @right
+    end
+    
   end
   
 end

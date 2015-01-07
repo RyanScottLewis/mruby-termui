@@ -17,10 +17,10 @@ module TermUI
     attr_reader :text
     
     # Set the text of this label.
+    # 
+    # @param value [#to_s]
     def text=(value)
-      value = value.to_s
-      
-      @text = value
+      @text = value.to_s
     end
     
     # Get whether the text is bold.
@@ -52,6 +52,7 @@ module TermUI
     end
     
     # Get the computed width of this label.
+    # TODO: Margins
     def computed_width
       return 0 if @text.empty?
       
@@ -59,6 +60,7 @@ module TermUI
     end
     
     # Get the computed height of this label.
+    # TODO: Margins
     def computed_height
       return 1 if @text.empty?
       
