@@ -4,38 +4,52 @@ module TermUI
   class Widget
     
     include HasApplication
+    include HasBorders
     include HasDimensions
     include HasEvents
     include HasForegroundAndBackground
     include HasMargins
+    include HasPadding
     include HasRelativeCoordinates
     
-    # TODO: HasMargin, HasPadding, HasBorder
+    # Get the X coordinate.
+    # 
+    # @return [Integer]
+    def x
+      super + margins.left
+    end
+    
+    # Get the Y coordinate.
+    # 
+    # @return [Integer]
+    def y
+      super + margins.top
+    end
     
     # Get the width of this object.
     def width
       return computed_width if @width == 0
       
-      super
+      super - margins.width
     end
     
     # Get the height of this object.
     def height
       return computed_height if @height == 0
       
-      super
+      super - margins.height
     end
     
     # Get the computed width of this widget.
     # Subclasses implement this method with their own logic.
     def computed_width
-      @width + margins.width
+      @width
     end
     
     # Get the computed height of this widget.
     # Subclasses implement this method with their own logic.
     def computed_height
-      @height + margins.height
+      @height
     end
     
     # Get the cursor for this application.
@@ -98,10 +112,6 @@ module TermUI
       options[:x] += absolute_x
       options[:y] += absolute_y
       
-      # Translate the coordinates by top & left margin
-      options[:x] += margins.left
-      options[:y] += margins.top
-      
       # TODO: What about bottom and right margins?
       
       # Convert character to unicode # TODO: Is utf8_char_to_unicode even needed at this point?
@@ -140,14 +150,6 @@ module TermUI
       # Translate the coordinates by absolute coordinates
       options[:x] += absolute_x
       options[:y] += absolute_y
-      
-      # Translate the coordinates by top & left margin
-      options[:x] += margins.left
-      options[:y] += margins.top
-      
-      # Offset width & height by bottom & right margins
-      options[:width] -= margins.right
-      options[:height] -= margins.bottom
       
       # Convert character to unicode # TODO: Is utf8_char_to_unicode even needed at this point?
       # TODO: If an options[:character] is an integer, the use that. In any other case, use the below

@@ -1,6 +1,6 @@
 module TermUI
   
-  # Adds the `margins` attribute to objects, which can be :vertical or :horizontal.
+  # Adds the `margins` attribute to objects.
   module HasMargins
     
     include HasAttributes
@@ -16,10 +16,10 @@ module TermUI
       super
     end
     
-    # Get the margins of this widget.
+    # Get the margins of this object.
     attr_reader :margins
     
-    # Set the margins of this widget.
+    # Set the margins of this object.
     # 
     # @param value [Margins] The new Margins instance.
     def margins=(value)

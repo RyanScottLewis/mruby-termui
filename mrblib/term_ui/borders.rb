@@ -1,6 +1,6 @@
 module TermUI
   
-  class Margins
+  class Borders
     
     include HasSideAttributes
     
