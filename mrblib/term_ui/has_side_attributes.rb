@@ -6,7 +6,7 @@ module TermUI
     include HasAttributes
     
     def initialize(attributes={})
-      @top, @left, @bottom, @right = 0, 0, 0, 0
+      @top, @right, @bottom, @left = 0, 0, 0, 0
       
       super
     end
