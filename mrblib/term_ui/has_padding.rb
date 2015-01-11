@@ -1,6 +1,7 @@
 module TermUI
   
   # Adds the `padding` attribute to objects.
+  # TODO: Lots of repeated code in HasMargins, HasPadding, and HasBorders
   module HasPadding
     
     include HasAttributes

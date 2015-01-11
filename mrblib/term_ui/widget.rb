@@ -12,54 +12,47 @@ module TermUI
     include HasPadding
     include HasRelativeCoordinates
     
-    # Get the X coordinate.
+    def initialize(attributes={})
+      super
+      
+      @offsets = Offsets.new( widget: self )
+    end
+    
+    # Get the offsets of this widget.
+    # 
+    # @return [Offsets]
+    attr_reader :offsets
+    
+    # Get the outer width of this widget.
+    # This is the dimension including any borders, margins, or padding sizes.
     # 
     # @return [Integer]
-    def x
-      super + margins.left
+    def outer_width
+      @width + borders.width + margins.width + padding.width
     end
     
-    # Get the Y coordinate.
+    # Get the outer width of this widget.
+    # This is the dimension including any borders, margins, or padding sizes.
     # 
     # @return [Integer]
-    def y
-      super + margins.top
-    end
-    
-    # Get the width of this object.
-    def width
-      return computed_width if @width == 0
-      
-      super - margins.width
-    end
-    
-    # Get the height of this object.
-    def height
-      return computed_height if @height == 0
-      
-      super - margins.height
-    end
-    
-    # Get the computed width of this widget.
-    # Subclasses implement this method with their own logic.
-    def computed_width
-      @width
-    end
-    
-    # Get the computed height of this widget.
-    # Subclasses implement this method with their own logic.
-    def computed_height
-      @height
+    def outer_height
+      @height + borders.height + margins.height + padding.height
     end
     
     # Get the cursor for this application.
+    # 
+    # @return [Cursor]
     def cursor
       application.cursor
     end
     
     # Queue all objects for drawing during the next loop cycle.
+    # 
+    # @return [Widget] This widget.
     def redraw
       application.redraw
+      
+      self
     end
     
     # Update this widget.
@@ -68,11 +61,18 @@ module TermUI
     end
     
     # Draw this widget.
+    # 
+    # @return [Widget] This widget.
     def draw
       draw_background
+      draw_border
+      
+      self
     end
     
     # Focus on this widget.
+    # 
+    # @return [Widget] This widget.
     def focus
       application.focus(self)
     end
@@ -81,15 +81,10 @@ module TermUI
     # 
     # @return [Boolean]
     def focused?
-      application.focused == self
+      application.focused == self # TODO: application.focused?(self)
     end
     
     protected
-    
-    # Draw the background of this widget.
-    def draw_background
-      draw_rectangle( width: width, height: height, foreground: foreground, background: background )
-    end
     
     # Change a cell relative to this widget's coordinates.
     def draw_cell(options={})
@@ -161,6 +156,16 @@ module TermUI
           Termbox.change_cell( options[:x]+x_offset, options[:y]+y_offset, options[:character], options[:foreground], options[:background] )
         end
       end
+    end
+    
+    # Draw the background of this widget.
+    def draw_background
+      draw_rectangle( width: width, height: height, foreground: foreground, background: background )
+    end
+    
+    # Draw the border of this widget.
+    def draw_border
+      
     end
     
     def switch_foreground_and_background

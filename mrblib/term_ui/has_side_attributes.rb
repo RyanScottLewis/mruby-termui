@@ -1,6 +1,7 @@
 module TermUI
   
   # Adds the `top`, `right`, `bottom`, `left`, `width`, and `height` attributes to objects.
+  # TODO: Some helper class like .attr_writer_integer(*names)
   module HasSideAttributes
     
     include HasAttributes
@@ -18,7 +19,7 @@ module TermUI
     
     # Set the top attribute.
     # 
-    # @param value [#to_i]
+    # @param [#to_i] value
     # @return [Integer]
     def top=(value)
       value = value.to_i
@@ -34,7 +35,7 @@ module TermUI
     
     # Set the right attribute.
     # 
-    # @param value [#to_i]
+    # @param [#to_i] value
     # @return [Integer]
     def right=(value)
       value = value.to_i
@@ -50,7 +51,7 @@ module TermUI
     
     # Set the bottom attribute.
     # 
-    # @param value [#to_i]
+    # @param [#to_i] value
     # @return [Integer]
     def bottom=(value)
       value = value.to_i
@@ -66,7 +67,7 @@ module TermUI
     
     # Set the left attribute.
     # 
-    # @param value [#to_i]
+    # @param [#to_i] value
     # @return [Integer]
     def left=(value)
       value = value.to_i

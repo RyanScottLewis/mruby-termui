@@ -1,6 +1,7 @@
 module TermUI
   
   # Adds the `borders` attribute to objects.
+  # TODO: Lots of repeated code in HasMargins, HasPadding, and HasBorders
   module HasBorders
     
     include HasAttributes

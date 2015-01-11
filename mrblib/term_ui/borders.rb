@@ -4,6 +4,8 @@ module TermUI
     
     class << self
       
+      # TODO: attr_writer_colors (#left_foreground, etc.)
+      
       def attr_writer_character(*names)
         names.each do |name|
           name = "#{name}_character".to_sym

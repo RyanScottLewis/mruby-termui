@@ -1,6 +1,7 @@
 module TermUI
   
   # Adds the `margins` attribute to objects.
+  # TODO: Lots of repeated code in HasMargins, HasPadding, and HasBorders
   module HasMargins
     
     include HasAttributes
