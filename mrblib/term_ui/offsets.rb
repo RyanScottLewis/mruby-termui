@@ -2,8 +2,6 @@ module TermUI
   
   class Offsets
     
-    include HasSideAttributes
-    
     # Get the widget to calculate offsets for.
     # 
     # @return [Widget]

@@ -86,73 +86,76 @@ module TermUI
     
     protected
     
-    # Change a cell relative to this widget's coordinates.
-    def draw_cell(options={})
-      raise TypeError, 'options must respond to :to_hash or :to_h' unless options.respond_to?(:to_hash) || options.respond_to?(:to_h)
+    # TODO: Widget drawing should be it's own module or class?
+    
+    def validate_cell_drawing_options(options)
       options = options.to_hash rescue options.to_h
       
       options = { x: 0, y: 0, foreground: Termbox::DEFAULT, background: Termbox::DEFAULT }.merge(options)
       
-      raise ArgumentError, ':x option must respond to :to_i' unless options[:x].respond_to?(:to_i)
-      raise ArgumentError, ':y option must respond to :to_i' unless options[:y].respond_to?(:to_i)
-      raise ArgumentError, ':foreground option must respond to :to_i' unless options[:foreground].respond_to?(:to_i)
-      raise ArgumentError, ':background option must respond to :to_i' unless options[:background].respond_to?(:to_i)
-      
       options[:x]          = options[:x].to_i
       options[:y]          = options[:y].to_i
       options[:foreground] = options[:foreground].to_i
       options[:background] = options[:background].to_i
       
+      options
+    end
+    
+    def validate_rectangle_drawing_options(options)
+      options = validate_cell_drawing_options(options)
+      
+      options = { width: 1, height: 1 }.merge(options)
+      
+      options[:width]  = options[:width].to_i
+      options[:height] = options[:height].to_i
+      
+      options[:width]  = 1 if options[:width]  < 1
+      options[:height] = 1 if options[:height] < 1
+      
+      options
+    end
+    
+    def translate_cell_drawing_options(options)
       # Translate the coordinates by absolute coordinates
       options[:x] += absolute_x
       options[:y] += absolute_y
       
-      # TODO: What about bottom and right margins?
+      # Translate the coordinates by offsets
+      options[:x] += offsets.left
+      options[:y] += offsets.top
       
-      # Convert character to unicode # TODO: Is utf8_char_to_unicode even needed at this point?
-      # TODO: If an options[:character] is an integer, the use that. In any other case, use the below
+      options
+    end
+    
+    # Convert options[:character] to unicode.
+    # TODO: Is utf8_char_to_unicode even needed at this point?
+    def convert_cell_drawing_character_option_to_unicode(options)
       options[:character] = Termbox.utf8_char_to_unicode( options[:character].to_s[0] ) unless options[:character].nil?
       options[:character] ||= 0
       
+      options
+    end
+    
+    # Change a cell relative to this widget's coordinates.
+    def draw_cell(options={})
+      options = validate_cell_drawing_options(options)
+      options = translate_cell_drawing_options(options)
+      options = convert_cell_drawing_character_option_to_unicode(options)
+      
+      # TODO: Unless :x or :y is out of the widgets drawing area (absolute coordinate plus dimension)
       Termbox.change_cell( options[:x], options[:y], options[:character], options[:foreground], options[:background] )
     end
     
-    # TODO: Note the redundency in code with this and #draw_cell
     # Change a rectangle of cells relative to this widget's coordinates.
+    # TODO: :filled option
     def draw_rectangle(options={})
-      raise TypeError, 'options must respond to :to_hash or :to_h' unless options.respond_to?(:to_hash) || options.respond_to?(:to_h)
-      options = options.to_hash rescue options.to_h
-      
-      options = { x: 0, y: 0, width: 1, height: 1, foreground: Termbox::DEFAULT, background: Termbox::DEFAULT }.merge(options)
-      
-      raise ArgumentError, ':x option must respond to :to_i' unless options[:x].respond_to?(:to_i)
-      raise ArgumentError, ':y option must respond to :to_i' unless options[:y].respond_to?(:to_i)
-      raise ArgumentError, ':width option must respond to :to_i' unless options[:width].respond_to?(:to_i)
-      raise ArgumentError, ':height option must respond to :to_i' unless options[:height].respond_to?(:to_i)
-      raise ArgumentError, ':foreground option must respond to :to_i' unless options[:foreground].respond_to?(:to_i)
-      raise ArgumentError, ':background option must respond to :to_i' unless options[:background].respond_to?(:to_i)
-      
-      options[:x]          = options[:x].to_i
-      options[:y]          = options[:y].to_i
-      options[:width]      = options[:width].to_i
-      options[:height]     = options[:height].to_i
-      options[:foreground] = options[:foreground].to_i
-      options[:background] = options[:background].to_i
-      
-      options[:width] = 1 if options[:width] < 1
-      options[:height] = 1 if options[:height] < 1
-      
-      # Translate the coordinates by absolute coordinates
-      options[:x] += absolute_x
-      options[:y] += absolute_y
-      
-      # Convert character to unicode # TODO: Is utf8_char_to_unicode even needed at this point?
-      # TODO: If an options[:character] is an integer, the use that. In any other case, use the below
-      options[:character] = Termbox.utf8_char_to_unicode( options[:character].to_s[0] ) unless options[:character].nil?
-      options[:character] ||= 0
+      options = validate_rectangle_drawing_options(options)
+      options = translate_cell_drawing_options(options)
+      options = convert_cell_drawing_character_option_to_unicode(options)
       
       options[:width].times do |x_offset|
         options[:height].times do |y_offset|
+          # TODO: Unless :x or :y is out of the widgets drawing area (absolute coordinate plus dimension plus x/y_offset)
           Termbox.change_cell( options[:x]+x_offset, options[:y]+y_offset, options[:character], options[:foreground], options[:background] )
         end
       end

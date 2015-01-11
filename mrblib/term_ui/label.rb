@@ -3,22 +3,24 @@ module TermUI
   class Label < Widget
     
     def initialize(attributes={})
-      @horizontal_alignment = :left
-      @vertical_alignment = :top
+      @horizontal_alignment, @vertical_alignment = :left, :top
+      @bold, @underlined = false, false
       @text = ""
-      @bold = false
       
       super
     end
     
     # TODO: #text_foreground, #text_background
     
-    # Get the text of this label.
+    # Get the text of this label
+    # 
+    # @return [String]
     attr_reader :text
     
     # Set the text of this label.
     # 
-    # @param value [#to_s]
+    # @param [#to_s] value
+    # @return [String]
     def text=(value)
       @text = value.to_s
     end
@@ -51,42 +53,40 @@ module TermUI
       @underlined = !!value
     end
     
-    # Get the computed width of this label.
-    # TODO: Margins
-    def computed_width
+    # Get the width of the text of this label.
+    # 
+    # @return [Integer]
+    def text_width
       return 0 if @text.empty?
       
       @text.lines.collect(&:length).sort.last
     end
     
-    # Get the computed height of this label.
-    # TODO: Margins
-    def computed_height
-      return 1 if @text.empty?
-      
-      result = @text.lines.length
-      result += 1 if @text[-1] == "\n"
-      
-      result
+    # Get the height of the text of this label.
+    # 
+    # @return [Integer]
+    def text_height
+      lines.length
     end
     
     # Get the lines of this label.
+    # 
+    # @return [<String>]
     def lines
-      return [text] if @text.empty?
-      
-      result = @text.lines
-      result << "" if @text[-1] == "\n"
-      
-      result
+      @text.split("\n") # NOTE: Would use String#lines but it's output doesn't think a trailing newline character constitutes a line unless it is followed by another character. #split also removes the newline characters.
     end
     
     # Get the horizontal alignment of this widget.
+    # 
+    # @return [Symbol]
     attr_reader :horizontal_alignment
     
     # Set the horizontal alignment of this widget.
     # Must be :left, :center, or :right.
+    # 
+    # @param [#to_sym] value
+    # @return [Symbol]
     def horizontal_alignment=(value)
-      raise TypeError, 'horizontal_alignment must respond to :to_sym' unless value.respond_to?(:to_sym)
       value = value.to_sym
       raise ArgumentError, 'horizontal_alignment must be one of :left, :center, or :right' unless [:left, :center, :right].include?(value)
       
@@ -94,19 +94,22 @@ module TermUI
     end
     
     # Get the vertical alignment of this widget.
+    # 
+    # @return [Symbol]
     attr_reader :vertical_alignment
     
     # Set the vertical alignment of this widget.
     # Must be :left, :center, or :right.
+    # 
+    # @param [#to_sym] value
+    # @return [Symbol]
     def vertical_alignment=(value)
-      raise TypeError, 'vertical_alignment must respond to :to_sym' unless value.respond_to?(:to_sym)
       value = value.to_sym
       raise ArgumentError, 'vertical_alignment must be one of :top, :center, or :bottom' unless [:top, :center, :bottom].include?(value)
       
       @vertical_alignment = value
     end
     
-    # TODO: If width < computed_width or height < computed_height then clip the output
     def draw
       super
       
@@ -135,12 +138,12 @@ module TermUI
           
           y_offset += 1
         else
-          foreground_and_attributes = foreground | Termbox::BOLD | Termbox::UNDERLINE if bold? && underlined?
-          foreground_and_attributes = foreground | Termbox::BOLD if bold?
-          foreground_and_attributes = foreground | Termbox::UNDERLINE if underlined?
-          foreground_and_attributes = foreground if !bold? && !underlined?
+          foreground_and_flags = foreground if !bold? && !underlined?
+          foreground_and_flags = foreground | Termbox::BOLD if bold?
+          foreground_and_flags = foreground | Termbox::UNDERLINE if underlined?
+          foreground_and_flags = foreground | Termbox::BOLD | Termbox::UNDERLINE if bold? && underlined?
           
-          draw_cell( x: x_offset, y: y_offset, character: character_to_draw(character), foreground: foreground_and_attributes, background: background )
+          draw_cell( x: x_offset, y: y_offset, character: character_to_draw(character), foreground: foreground_and_flags, background: background )
           
           x_offset += 1
         end
@@ -149,17 +152,17 @@ module TermUI
     
     def x_offset_from_alignment
       case horizontal_alignment
-        when :left then 0
-        when :center then ( (computed_width-width).abs/2 ).to_i
-        when :right then (computed_width-width).abs
+        when :left   then 0
+        when :center then ( ( text_width-width ).abs/2 ).to_i
+        when :right  then ( text_width-width ).abs
       end
     end
     
     def y_offset_from_alignment
       case vertical_alignment
-        when :top then 0
-        when :center then ( (computed_height-height).abs/2 ).to_i
-        when :bottom then (computed_height-height).abs
+        when :top    then 0
+        when :center then ( ( text_height-height ).abs/2 ).to_i
+        when :bottom then ( text_height-height ).abs
       end
     end
     

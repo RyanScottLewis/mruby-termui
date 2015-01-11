@@ -38,6 +38,7 @@ MRuby::Gem::Specification.new('mruby-termui') do |spec|
   
   spec.rbfiles << "#{dir}/mrblib/term_ui/borders.rb"
   spec.rbfiles << "#{dir}/mrblib/term_ui/margins.rb"
+  spec.rbfiles << "#{dir}/mrblib/term_ui/offsets.rb"
   spec.rbfiles << "#{dir}/mrblib/term_ui/padding.rb"
   
   spec.rbfiles << "#{dir}/mrblib/term_ui/widget.rb"
