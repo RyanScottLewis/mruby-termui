@@ -17,7 +17,7 @@ module TermUI
     # @return [Integer]
     def width
       result = super
-      result = text_width if result == 0 # TODO: ignore given value if autosize_width is true
+      result = text_width if result == 0 # TODO: :auto
       
       result
     end
@@ -27,7 +27,7 @@ module TermUI
     # @return [Integer]
     def height
       result = super
-      result = text_height if result == 0 # TODO: ignore given value if autosize_height is true
+      result = text_height if result == 0 # TODO: :auto
       
       result
     end
@@ -43,8 +43,6 @@ module TermUI
     # @return [String]
     def text=(value)
       @text = value.to_s
-      
-      @text
     end
     
     # Get the lines of this label.

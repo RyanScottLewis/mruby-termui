@@ -5,7 +5,7 @@ module TermUI
     include HasChildren
     
     # Get the computed width of this group.
-    # TODO: Margins
+    # TODO: Should just be named width?
     def computed_width
       return 0 if children.empty?
       
@@ -13,7 +13,7 @@ module TermUI
     end
     
     # Get the computed height of this group.
-    # TODO: Margins
+    # TODO: Should just be named width?
     def computed_height
       return 0 if children.empty?
       
