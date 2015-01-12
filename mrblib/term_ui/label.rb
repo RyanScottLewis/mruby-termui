@@ -4,15 +4,35 @@ module TermUI
     
     def initialize(attributes={})
       @horizontal_alignment, @vertical_alignment = :left, :top
-      @bold, @underlined = false, false
+      @bold, @underline = false, false
       @text = ""
       
       super
     end
     
-    # TODO: #text_foreground, #text_background
+    # TODO: #text_foreground, #text_background (? Maybe a separate Text widget, like in )
     
-    # Get the text of this label
+    # Get the width of this label.
+    # 
+    # @return [Integer]
+    def width
+      result = super
+      result = text_width if result == 0 # TODO: ignore given value if autosize_width is true
+      
+      result
+    end
+    
+    # Get the height of this label.
+    # 
+    # @return [Integer]
+    def height
+      result = super
+      result = text_height if result == 0 # TODO: ignore given value if autosize_height is true
+      
+      result
+    end
+    
+    # Get the text of this label.
     # 
     # @return [String]
     attr_reader :text
@@ -23,6 +43,31 @@ module TermUI
     # @return [String]
     def text=(value)
       @text = value.to_s
+      
+      @text
+    end
+    
+    # Get the lines of this label.
+    # 
+    # @return [<String>]
+    def lines
+      @text.split("\n") # NOTE: Would use String#lines but it's output doesn't think a trailing newline character constitutes a line unless it is followed by another character. #split also removes the newline characters.
+    end
+    
+    # Get the width of the text of this label.
+    # 
+    # @return [Integer]
+    def text_width
+      return 0 if @text.empty?
+      
+      lines.collect(&:length).sort.last
+    end
+    
+    # Get the height of the text of this label.
+    # 
+    # @return [Integer]
+    def text_height
+      lines.length
     end
     
     # Get whether the text is bold.
@@ -43,37 +88,14 @@ module TermUI
     # 
     # @return [Boolean]
     def underlined?
-      @underlined
+      @underline
     end
     
     # Set whether the text is underlined.
     # 
     # @return [Boolean]
     def underline=(value)
-      @underlined = !!value
-    end
-    
-    # Get the width of the text of this label.
-    # 
-    # @return [Integer]
-    def text_width
-      return 0 if @text.empty?
-      
-      @text.lines.collect(&:length).sort.last
-    end
-    
-    # Get the height of the text of this label.
-    # 
-    # @return [Integer]
-    def text_height
-      lines.length
-    end
-    
-    # Get the lines of this label.
-    # 
-    # @return [<String>]
-    def lines
-      @text.split("\n") # NOTE: Would use String#lines but it's output doesn't think a trailing newline character constitutes a line unless it is followed by another character. #split also removes the newline characters.
+      @underline = !!value
     end
     
     # Get the horizontal alignment of this widget.
@@ -94,6 +116,7 @@ module TermUI
     end
     
     # Get the vertical alignment of this widget.
+    # Will be :left, :center, or :right.
     # 
     # @return [Symbol]
     attr_reader :vertical_alignment

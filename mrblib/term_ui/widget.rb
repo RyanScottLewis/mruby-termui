@@ -109,7 +109,7 @@ module TermUI
       options[:width]  = options[:width].to_i
       options[:height] = options[:height].to_i
       
-      options[:width]  = 1 if options[:width]  < 1
+      options[:width]  = 1 if options[:width] < 1
       options[:height] = 1 if options[:height] < 1
       
       options
