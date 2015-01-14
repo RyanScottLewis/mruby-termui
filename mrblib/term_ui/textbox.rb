@@ -85,7 +85,9 @@ module TermUI
     end
     
     def set_cursor_position
-      cursor.x = absolute_x+(text.length < width ? lines.last.length : width-1)
+      last_line_length = lines.last.nil? ? 0 : lines.last.length
+      
+      cursor.x = absolute_x+(text.length < width ? last_line_length : width-1)
       cursor.y = absolute_y+text_height-1
     end
     
