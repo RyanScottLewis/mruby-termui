@@ -27,7 +27,7 @@ module TermUI
     def initialize(attributes={})
       super
       
-      @width = 1 if @width < 1
+      @width  = 1 if @width < 1
       @height = 1 if @height < 1
     end
     
@@ -49,7 +49,7 @@ module TermUI
     # Set the mask character for this textbox.
     # Set to anything for a "password" textbox. Only the first character of whatever is given is used.
     # 
-    # @param [String] The new value.
+    # @param [String] value
     # @return [String]
     def mask_character=(value)
       value = value.to_s.strip[0]
@@ -59,6 +59,9 @@ module TermUI
     end
     
     # Set the width of this widget.
+    # 
+    # @param [#to_i] value
+    # @return [Integer]
     def width=(value)
       super
       
@@ -66,6 +69,9 @@ module TermUI
     end
     
     # Set the height of this widget.
+    # 
+    # @param [#to_i] value
+    # @return [Integer]
     def height=(value)
       super
       
@@ -87,8 +93,8 @@ module TermUI
     def set_cursor_position
       last_line_length = lines.last.nil? ? 0 : lines.last.length
       
-      cursor.x = absolute_x+(text.length < width ? last_line_length : width-1)
-      cursor.y = absolute_y+text_height-1
+      cursor.x = absolute_x + offsets.left + (text.length < width ? last_line_length : width-1)
+      cursor.y = absolute_y + offsets.top + text_height - 1
     end
     
   end
