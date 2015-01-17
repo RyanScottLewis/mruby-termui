@@ -7,8 +7,7 @@ module TermUI
     include HasOrientation
     
     def initialize(attributes={})
-      @fill = false
-      @spacing = 0
+      @fill, @spacing = false, 0
       
       super
     end
@@ -105,15 +104,16 @@ module TermUI
     # Position and resize this pack's children based on it's attributes.
     def pack_children
       child_x, child_y = 0, 0
+      
       children.each do |child|
         if horizontal?
           child.x = child_x
           child.height = height if fill?
-          child_x += child.width + spacing
+          child_x += child.outer_width + spacing
         elsif vertical?
           child.y = child_y if vertical?
           child.width = width if fill?
-          child_y += child.height + spacing
+          child_y += child.outer_height + spacing
         end
       end
     end
