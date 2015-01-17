@@ -19,6 +19,7 @@ MRuby::Gem::Specification.new('mruby-termui') do |spec|
   spec.rbfiles << "#{dir}/mrblib/term_ui/has_margins.rb"
   spec.rbfiles << "#{dir}/mrblib/term_ui/has_orientation.rb"
   spec.rbfiles << "#{dir}/mrblib/term_ui/has_padding.rb"
+  spec.rbfiles << "#{dir}/mrblib/term_ui/has_offsets.rb"
   spec.rbfiles << "#{dir}/mrblib/term_ui/has_parent.rb"
   spec.rbfiles << "#{dir}/mrblib/term_ui/has_relative_coordinates.rb"
   spec.rbfiles << "#{dir}/mrblib/term_ui/has_side_attributes.rb"
