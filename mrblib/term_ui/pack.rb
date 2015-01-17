@@ -2,6 +2,7 @@ module TermUI
   
   # A Group which moves and optionally resizes child widgets.
   # TODO: Expand attribute - See: http://www.pygtk.org/pygtk2tutorial/sec-DetailsOfBoxes.html
+  # TODO: I think the only time it needs to pack_children is right before drawing? Would that get messy?
   class Pack < Group
     
     include HasOrientation
