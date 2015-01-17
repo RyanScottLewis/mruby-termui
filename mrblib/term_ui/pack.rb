@@ -12,41 +12,41 @@ module TermUI
       super
     end
     
-    # # Set the width dimension of this pack.
-    # def width=(value)
-    #   result = super
-    #
-    #   pack_children
-    #
-    #   result
-    # end
+    # Set the width dimension of this pack.
+    def width=(value)
+      result = super
+
+      pack_children
+
+      result
+    end
     
-    # # Set the height dimension of this pack.
-    # def height=(value)
-    #   result = super
-    #
-    #   pack_children
-    #
-    #   result
-    # end
+    # Set the height dimension of this pack.
+    def height=(value)
+      result = super
+
+      pack_children
+
+      result
+    end
     
-    # # Add a child to this group.
-    # def add_child(widget)
-    #   child = super
-    #
-    #   pack_children
-    #
-    #   child
-    # end
+    # Add a child to this group.
+    def add_child(widget)
+      child = super
+
+      pack_children
+
+      child
+    end
     
-    # # Remove a child from this object's children at the given index.
-    # def delete_child_at(index)
-    #   child = super
-    #
-    #   pack_children
-    #
-    #   child
-    # end
+    # Remove a child from this object's children at the given index.
+    def delete_child_at(index)
+      child = super
+
+      pack_children
+
+      child
+    end
     
     # Get whether children will be filled.
     # 
@@ -66,10 +66,10 @@ module TermUI
     # @return [Boolean]
     def fill=(value)
       @fill = !!value
-      #
-      # pack_children
-      #
-      # @fill
+
+      pack_children
+
+      @fill
     end
     
     # Get the spacing between children.
@@ -88,10 +88,10 @@ module TermUI
       value = 0 if value < 0
       
       @spacing = value
-      #
-      # pack_children
-      #
-      # @spacing
+
+      pack_children
+
+      @spacing
     end
     
     # Draw this pack.

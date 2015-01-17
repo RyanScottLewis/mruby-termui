@@ -2,6 +2,14 @@ module TermUI
   
   class Offsets
     
+    include HasAttributes
+    
+    def initialize(attributes={})
+      super
+      
+      raise ArgumentError, 'widget attribute must be set' if widget.nil?
+    end
+    
     # Get the widget to calculate offsets for.
     # 
     # @return [Widget]
@@ -21,36 +29,28 @@ module TermUI
     # 
     # @return [Integer]
     def top
-      return 0 if widget.nil?
-      
-      widget.margin.top + widget.border.top
+      @widget.margins.top + @widget.borders.top
     end
     
     # Get the right offset from the contents of a widget from the right.
     # 
     # @return [Integer]
     def right
-      return 0 if widget.nil?
-      
-      widget.margin.right + widget.border.right
+      @widget.margins.right + @widget.borders.right
     end
     
     # Get the bottom offset from the contents of a widget from the bottom.
     # 
     # @return [Integer]
     def bottom
-      return 0 if widget.nil?
-      
-      widget.margin.bottom + widget.border.bottom
+      @widget.margins.bottom + @widget.borders.bottom
     end
     
     # Get the left offset from the contents of a widget from the left.
     # 
     # @return [Integer]
     def left
-      return 0 if widget.nil?
-      
-      widget.margin.left + widget.border.left
+      @widget.margins.left + @widget.borders.left
     end
     
   end

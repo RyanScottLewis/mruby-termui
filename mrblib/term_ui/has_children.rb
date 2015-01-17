@@ -11,6 +11,9 @@ module TermUI
     end
     
     # Get a child from it's index.
+    # 
+    # @param [Integer] index
+    # @return [Integer]
     def [](index)
       children[index]
     end
@@ -19,6 +22,9 @@ module TermUI
     attr_reader :children
     
     # Add a child to this group.
+    # 
+    # @param [Widget] widget
+    # @return [Widget]
     def add_child(widget)
       raise TypeError, 'widget must respond to #draw' unless widget.respond_to?(:draw)
       
@@ -30,12 +36,18 @@ module TermUI
     # alias_method :<<, :add_child
     
     # Remove a child from this object's children at the given index.
+    # 
+    # @param [Integer] index
+    # @return [Widget]
     def delete_child_at(index)
       # NOTE: All deleting uses this method so that subclasses can override default behaviour when deleting a child
       @children.delete_at(index)
     end
     
     # Remove a child from this object's children.
+    # 
+    # @param [Widget] widget
+    # @return [Widget]
     def delete_child(widget)
       delete_child_at( @children.index(widget) )
     end
@@ -49,10 +61,6 @@ module TermUI
     
     def draw_children
       children.each(&:draw)
-    end
-    
-    def update_children
-      children.each(&:update)
     end
     
   end
