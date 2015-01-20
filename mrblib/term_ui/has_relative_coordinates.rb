@@ -1,6 +1,6 @@
 module TermUI
   
-  # Adds the `x` and `y` attributes, which are relative to it's parent.
+  # Adds the `absolute_x` and `absolute_y` attributes, which are relative to it's parent.
   module HasRelativeCoordinates
     
     include HasParent
