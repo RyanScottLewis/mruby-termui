@@ -92,6 +92,11 @@ module TermUI
     
     def set_cursor_position
       last_line_length = lines.last.nil? ? 0 : lines.last.length
+
+      MEMS.logger.debug( ?! * 80 )
+      MEMS.logger.debug( absolute_y )
+      MEMS.logger.debug( offsets.top )
+      MEMS.logger.debug( ?! * 80 )
       
       cursor.x = absolute_x + offsets.left + (text.length < width ? last_line_length : width-1)
       cursor.y = absolute_y + offsets.top + text_height - 1

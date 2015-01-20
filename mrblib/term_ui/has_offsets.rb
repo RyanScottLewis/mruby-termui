@@ -10,7 +10,7 @@ module TermUI
     def initialize(attributes={})
       super
       
-      @offsets = Offsets.new( margins: @margins, borders: @borders )
+      @offsets = Offsets.new( widget: self )
     end
     
     # Get the offsets of this widget.

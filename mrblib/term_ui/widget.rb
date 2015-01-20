@@ -15,10 +15,7 @@ module TermUI
     # 
     # @return [Integer]
     def outer_width
-      width + 
-      margins.width + 
-      borders.width + 
-      padding.width
+      width + offsets.width + padding.width
     end
     
     # Get the outer width of this widget.
@@ -26,10 +23,7 @@ module TermUI
     # 
     # @return [Integer]
     def outer_height
-      height + 
-      margins.height + 
-      borders.height + 
-      padding.height
+      height + offsets.height + padding.height
     end
     
     # Get the cursor for this application.
