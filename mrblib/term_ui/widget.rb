@@ -52,7 +52,7 @@ module TermUI
     # @return [Widget] This widget.
     def draw
       draw_background
-      draw_border
+      draw_borders
       
       self
     end
@@ -75,7 +75,7 @@ module TermUI
     
     # TODO: Widget drawing should be it's own module or class?
     
-    def validate_cell_drawing_options(options)
+    def convert_cell_drawing_options(options)
       options = options.to_hash rescue options.to_h
       
       options = { x: 0, y: 0, foreground: Termbox::DEFAULT, background: Termbox::DEFAULT }.merge(options)
@@ -88,8 +88,8 @@ module TermUI
       options
     end
     
-    def validate_rectangle_drawing_options(options)
-      options = validate_cell_drawing_options(options)
+    def convert_rectangle_drawing_options(options)
+      options = convert_cell_drawing_options(options)
       
       options = { width: 1, height: 1 }.merge(options)
       
@@ -125,9 +125,9 @@ module TermUI
     
     # Change a cell relative to this widget's coordinates.
     def draw_cell(options={})
-      options = validate_cell_drawing_options(options)
-      options = translate_cell_drawing_options(options)
+      options = convert_cell_drawing_options(options)
       options = convert_cell_drawing_character_option_to_unicode(options)
+      options = translate_cell_drawing_options(options)
       
       # TODO: Unless :x or :y is out of the widgets drawing area (absolute coordinate plus dimension)
       Termbox.change_cell( options[:x], options[:y], options[:character], options[:foreground], options[:background] )
@@ -136,9 +136,9 @@ module TermUI
     # Change a rectangle of cells relative to this widget's coordinates.
     # TODO: :filled option
     def draw_rectangle(options={})
-      options = validate_rectangle_drawing_options(options)
-      options = translate_cell_drawing_options(options)
+      options = convert_rectangle_drawing_options(options)
       options = convert_cell_drawing_character_option_to_unicode(options)
+      options = translate_cell_drawing_options(options)
       
       options[:width].times do |x_offset|
         options[:height].times do |y_offset|
@@ -153,9 +153,13 @@ module TermUI
       draw_rectangle( width: width, height: height, foreground: foreground, background: background )
     end
     
-    # Draw the border of this widget.
-    def draw_border
-      
+    # Draw the borders of this widget.
+    def draw_borders
+      # if borders.top > 0 # TODO: :none
+      #   # draw_rectangle( x: absolute_x + margins.left, y: absolute_y + margins.top, width: width + margins.width, height: borders.top, foreground: borders.foreground, background: borders.background, character: borders.top_character )
+      #   draw_rectangle( x: x + margins.left, y: y + margins.top, width: width + margins.width, height: borders.top, foreground: borders.foreground, background: Termbox::RED )
+      #   # draw_rectangle( x: absolute_x, y: absolute_y, width: width + margins.width, height: borders.top, foreground: borders.foreground, background: borders.background )
+      # end
     end
     
     def switch_foreground_and_background
