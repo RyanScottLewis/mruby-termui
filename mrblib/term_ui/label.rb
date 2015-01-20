@@ -65,7 +65,9 @@ module TermUI
     # 
     # @return [Integer]
     def text_height
-      lines.length
+      result = lines.length
+      
+      result == 0 ? 1 : result
     end
     
     # Get whether the text is bold.
