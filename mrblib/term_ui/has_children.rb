@@ -59,6 +59,10 @@ module TermUI
     
     protected
     
+    def update_children
+      children.each(&:update)
+    end
+    
     def draw_children
       children.each(&:draw)
     end
