@@ -36,6 +36,7 @@ MRuby::Gem::Specification.new('mruby-termui') do |spec|
   spec.rbfiles << "#{dir}/mrblib/term_ui/event/unfocus.rb"
   
   spec.rbfiles << "#{dir}/mrblib/term_ui/cursor.rb"
+  spec.rbfiles << "#{dir}/mrblib/term_ui/pencil.rb"
   
   spec.rbfiles << "#{dir}/mrblib/term_ui/borders.rb"
   spec.rbfiles << "#{dir}/mrblib/term_ui/margins.rb"

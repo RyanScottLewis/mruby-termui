@@ -166,7 +166,9 @@ module TermUI
           foreground_and_flags = foreground | Termbox::UNDERLINE if underlined?
           foreground_and_flags = foreground | Termbox::BOLD | Termbox::UNDERLINE if bold? && underlined?
           
-          draw_cell( x: x_offset, y: y_offset, character: character_to_draw(character), foreground: foreground_and_flags, background: background )
+          options = translate( x: x_offset, y: y_offset ).merge( character: character_to_draw(character), foreground: foreground_and_flags, background: background )
+          
+          pencil.draw_cell( options )
           
           x_offset += 1
         end

@@ -24,6 +24,7 @@ module TermUI
       @redraw = true
       @wait_time = 10
       @cursor = Cursor.new( application: self )
+      @pencil = Pencil.new
       @event_dispatcher = Event::Dispatcher.new( application: self )
     end
     
@@ -31,6 +32,16 @@ module TermUI
     # 
     # @return [Cursor]
     attr_reader :cursor
+    
+    # Get the pencil used for drawing.
+    # 
+    # @return [Pencil]
+    attr_reader :pencil
+    
+    # Get the event dispatcher.
+    # 
+    # @return [Event::Dispatcher]
+    attr_reader :event_dispatcher
     
     # Get the time to wait for events in milliseconds.
     # 
@@ -49,11 +60,6 @@ module TermUI
       
       @wait_time = value
     end
-    
-    # Get the event dispatcher.
-    # 
-    # @return [Event::Dispatcher]
-    attr_reader :event_dispatcher
     
     # Get the width of the application's screen.
     # 
