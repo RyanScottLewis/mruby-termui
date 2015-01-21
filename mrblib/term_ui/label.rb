@@ -151,6 +151,7 @@ module TermUI
       character
     end
     
+    # TODO: Should use instance vars 
     def draw_text
       x_offset = x_offset_start = x_offset_from_alignment
       y_offset = y_offset_from_alignment
@@ -177,7 +178,7 @@ module TermUI
     
     def x_offset_from_alignment
       case horizontal_alignment
-        when :left   then 0
+        when :left   then offsets.left
         when :center then ( ( text_width-width ).abs/2 ).to_i
         when :right  then ( text_width-width ).abs
       end
@@ -185,7 +186,7 @@ module TermUI
     
     def y_offset_from_alignment
       case vertical_alignment
-        when :top    then 0
+        when :top    then offsets.top
         when :center then ( ( text_height-height ).abs/2 ).to_i
         when :bottom then ( text_height-height ).abs
       end

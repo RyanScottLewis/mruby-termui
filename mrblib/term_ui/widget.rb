@@ -63,7 +63,7 @@ module TermUI
     # @return [Widget] This widget.
     def draw
       draw_background
-      # draw_borders
+      draw_borders
       
       self
     end
@@ -92,8 +92,8 @@ module TermUI
       options = options.to_hash rescue options.to_h
       
       {
-        x: options[:x].to_i + absolute_x,
-        y: options[:y].to_i + absolute_y
+        x: absolute_x + options[:x].to_i,
+        y: absolute_y + options[:y].to_i
       }
     end
     
@@ -101,7 +101,7 @@ module TermUI
     
     # Draw the background of this widget.
     def draw_background
-      options = translate( x: @margins.left, y: @margins.top ).merge( width: @width, height: @height, foreground: @foreground, background: @background )
+      options = translate( x: offsets.left, y: offsets.top ).merge( width: width, height: height, foreground: foreground, background: background )
       
       pencil.draw_rectangle( options )
     end
@@ -109,9 +109,15 @@ module TermUI
     # Draw the borders of this widget.
     def draw_borders
       if borders.top > 0 # TODO: :none
-        # draw_rectangle( x: absolute_x + margins.left, y: absolute_y + margins.top, width: width + margins.width, height: borders.top, foreground: borders.foreground, background: borders.background, character: borders.top_character )
-        pencil.draw_rectangle( x: x + margins.left, y: y + margins.top, width: width + margins.width, height: borders.top, foreground: borders.foreground, background: Termbox::RED )
-        # draw_rectangle( x: absolute_x, y: absolute_y, width: width + margins.width, height: borders.top, foreground: borders.foreground, background: borders.background )
+        options = translate( x: margins.left, y: margins.top ).merge( width: width + margins.width, height: borders.top, foreground: borders.foreground, background: Termbox::RED )
+        
+        pencil.draw_rectangle( options )
+      end
+      
+      if borders.bottom > 0 # TODO: :none
+        options = translate( x: margins.left, y: offsets.top + padding.bottom ).merge( width: width + margins.width, height: borders.bottom, foreground: borders.foreground, background: Termbox::RED )
+        
+        pencil.draw_rectangle( options )
       end
     end
     
